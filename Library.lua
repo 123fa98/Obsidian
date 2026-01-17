@@ -6385,7 +6385,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Translate(Nam),
+                Text = Library.Translate(Name),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
