@@ -8,8 +8,8 @@ local Language = readfile("Language.json")
 
 local function Translate(TranslateContent: String)
     if not LanguagePack[TranslateContent] then
-        write(`{game.PlaceId} _LanguageDebug.json`,"")
-        appendfile("{game.PlaceId}_LanguageDebug.json", `{TranslateContent}\n`)
+        writefile(`{game.PlaceId}_LanguageDebug.json`,"")
+        appendfile(`{game.PlaceId}_LanguageDebug.json`, `{TranslateContent}\n`)
         return `Error:{TranslateContent}`
     end
     local Content
