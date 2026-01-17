@@ -1,3 +1,29 @@
+if not isfolder("Httadmin") then makefolder("Httadmin") then
+if not isfile("Language.json") then writefile("Language.json","zh_CN") then
+
+local GetPlaceLanguagePack = game:HttpGet(`https://raw.githubusercontent.com/123fa98/Httadmin/main/Languages/{game.PlaceId}.lua`)
+if not GetPlaceLanguagePack then GetPlaceLanguagePack = "return {}" end
+local LanguagePack = loadstring(GetPlaceLanguagePack)()
+local Language = readfile("Language.json")
+
+local function Translate(TranslateContent: String)
+    if not LanguagePack[TranslateContent] then return `Error:{TranslateContent}` end
+    local Content
+    if Language = "en_US" then
+        Content = LanguagePack[TranslateContent].en_US
+    elseif Language = "zh_TW" then
+        Content = LanguagePack[TranslateContent].zh_TW
+    else
+        Content = TranslateContent
+    end
+    
+    return Content
+end
+
+
+
+
+
 local cloneref = (cloneref or clonereference or function(instance: any)
     return instance
 end)
@@ -6354,7 +6380,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Name,
+                Text = Translate(Nam),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
