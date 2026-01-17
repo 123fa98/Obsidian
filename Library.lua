@@ -9,9 +9,12 @@ local Language = readfile("Language.json")
 local function Translate(TranslateContent: String)
     if not LanguagePack[TranslateContent] then return `Error:{TranslateContent}` end
     local Content
-    if Language = "en_US" then
+    for i,v in LanguagePack[TranslateContent] do
+        print(i,v)
+    end
+    if Language == "en_US" then
         Content = LanguagePack[TranslateContent].en_US
-    elseif Language = "zh_TW" then
+    elseif Language == "zh_TW" then
         Content = LanguagePack[TranslateContent].zh_TW
     else
         Content = TranslateContent
@@ -19,9 +22,6 @@ local function Translate(TranslateContent: String)
     
     return Content
 end
-
-
-
 
 
 local cloneref = (cloneref or clonereference or function(instance: any)
@@ -6380,7 +6380,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Translate(Nam),
+                Text = Translate(Name),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
