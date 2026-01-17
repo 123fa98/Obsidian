@@ -5,10 +5,10 @@ local GetPlaceLanguagePack = game:HttpGet(`https://raw.githubusercontent.com/123
 if not GetPlaceLanguagePack then GetPlaceLanguagePack = "return {}" end
 local LanguagePack = loadstring(GetPlaceLanguagePack)()
 local Language = readfile("Httadmin/Language.json")
+writefile(`Httadmin/{game.PlaceId}_LanguageDebug.json`,"")
 
 local function Translate(TranslateContent: String)
     if not LanguagePack[TranslateContent] then
-        writefile(`Httadmin/{game.PlaceId}_LanguageDebug.json`,"")
         appendfile(`Httadmin/{game.PlaceId}_LanguageDebug.json`, `{TranslateContent}\n`)
         return `Error:{TranslateContent}`
     end
