@@ -1,15 +1,15 @@
 if not isfolder("Httadmin") then makefolder("Httadmin") end
-if not isfile("Language.json") then writefile("Language.json","zh_CN") end
+if not isfile("Httadmin/Language.json") then writefile("Httadmin/Language.json","zh_CN") end
 
 local GetPlaceLanguagePack = game:HttpGet(`https://raw.githubusercontent.com/123fa98/Httadmin/main/Languages/{game.PlaceId}.lua`)
 if not GetPlaceLanguagePack then GetPlaceLanguagePack = "return {}" end
 local LanguagePack = loadstring(GetPlaceLanguagePack)()
-local Language = readfile("Language.json")
+local Language = readfile("Httadmin/Language.json")
 
 local function Translate(TranslateContent: String)
     if not LanguagePack[TranslateContent] then
-        writefile(`{game.PlaceId}_LanguageDebug.json`,"")
-        appendfile(`{game.PlaceId}_LanguageDebug.json`, `{TranslateContent}\n`)
+        writefile(`Httadmin/{game.PlaceId}_LanguageDebug.json`,"")
+        appendfile(`Httadmin/{game.PlaceId}_LanguageDebug.json`, `{TranslateContent}\n`)
         return `Error:{TranslateContent}`
     end
     local Content
