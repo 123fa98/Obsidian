@@ -1,5 +1,5 @@
-if not isfolder("Httadmin") then makefolder("Httadmin") then
-if not isfile("Language.json") then writefile("Language.json","zh_CN") then
+if not isfolder("Httadmin") then makefolder("Httadmin") end
+if not isfile("Language.json") then writefile("Language.json","zh_CN") end
 
 local GetPlaceLanguagePack = game:HttpGet(`https://raw.githubusercontent.com/123fa98/Httadmin/main/Languages/{game.PlaceId}.lua`)
 if not GetPlaceLanguagePack then GetPlaceLanguagePack = "return {}" end
