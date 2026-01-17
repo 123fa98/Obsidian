@@ -7,11 +7,8 @@ local LanguagePack = loadstring(GetPlaceLanguagePack)()
 local Language = readfile("Language.json")
 
 local function Translate(TranslateContent: String)
-    if not LanguagePack[TranslateContent] then return `Error:{TranslateContent}` end
+    if not LanguagePack[TranslateContent] then return `Error:{TranslateContent}` write(`{game.PlaceId}_LanguageDebug.json`,"") appendfile("{game.PlaceId}_LanguageDebug.json", `{TranslateContent}\n`) end
     local Content
-    for i,v in LanguagePack[TranslateContent] do
-        print(i,v)
-    end
     if Language == "en_US" then
         Content = LanguagePack[TranslateContent].en_US
     elseif Language == "zh_TW" then
@@ -22,6 +19,9 @@ local function Translate(TranslateContent: String)
     
     return Content
 end
+
+
+
 
 
 local cloneref = (cloneref or clonereference or function(instance: any)
@@ -239,6 +239,7 @@ local Library = {
     Scales = {},
 
     ImageManager = CustomImageManager,
+    Translate = Translate,
 }
 
 if RunService:IsStudio() then
@@ -1484,7 +1485,7 @@ function Library:AddDraggableLabel(Text: string)
         BackgroundColor3 = "BackgroundColor",
         Size = UDim2.fromOffset(0, 0),
         Position = UDim2.fromOffset(6, 6),
-        Text = Text,
+        Text = Translate(Text),
         TextSize = 15,
         ZIndex = 10,
         Parent = ScreenGui,
@@ -1513,7 +1514,7 @@ function Library:AddDraggableLabel(Text: string)
     Table.Label = Label
 
     function Table:SetText(Text: string)
-        Label.Text = Text
+        Label.Text = Translate(Text)
     end
 
     function Table:SetVisible(Visible: boolean)
@@ -1555,9 +1556,9 @@ function Library:AddDraggableButton(Text: string, Func, ExcludeScaling: boolean?
     Table.Button = Button
 
     function Table:SetText(Text: string)
-        local X, Y = Library:GetTextBounds(Text, Library.Scheme.Font, 16)
+        local X, Y = Library:GetTextBounds(Translate(Text), Library.Scheme.Font, 16)
 
-        Button.Text = Text
+        Button.Text = Translate(Text)
         Button.Size = UDim2.fromOffset(X * 2, Y * 2)
     end
     Table:SetText(Text)
@@ -3124,7 +3125,7 @@ do
         local TextLabel = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(1, 0, 0, 18),
-            Text = Label.Text,
+            Text = Translate(Label.Text),
             TextSize = Data.Size,
             TextWrapped = Label.DoesWrap,
             TextXAlignment = Groupbox.IsKeyTab and Enum.TextXAlignment.Center or Enum.TextXAlignment.Left,
@@ -3140,7 +3141,7 @@ do
 
         function Label:SetText(Text: string)
             Label.Text = Text
-            TextLabel.Text = Text
+            TextLabel.Text = Translate(Text)
 
             if Label.DoesWrap then
                 local _, Y =
@@ -3275,7 +3276,7 @@ do
                 Active = not Button.Disabled,
                 BackgroundColor3 = Button.Disabled and "BackgroundColor" or "MainColor",
                 Size = UDim2.fromScale(1, 1),
-                Text = Button.Text,
+                Text = Translate(Button.Text),
                 TextSize = 14,
                 TextTransparency = 0.4,
                 Visible = Button.Visible,
@@ -3321,13 +3322,13 @@ do
                 if Button.DoubleClick then
                     Button.Locked = true
 
-                    Button.Base.Text = "Are you sure?"
+                    Button.Base.Text = Translate("Are you sure?")
                     Button.Base.TextColor3 = Library.Scheme.AccentColor
                     Library.Registry[Button.Base].TextColor3 = "AccentColor"
 
                     local Clicked = WaitForEvent(Button.Base.MouseButton1Click, 0.5)
 
-                    Button.Base.Text = Button.Text
+                    Button.Base.Text = Translate(Button.Text)
                     Button.Base.TextColor3 = Button.Risky and Library.Scheme.RedColor or Library.Scheme.FontColor
                     Library.Registry[Button.Base].TextColor3 = Button.Risky and "RedColor" or "FontColor"
 
@@ -3407,7 +3408,7 @@ do
 
             function SubButton:SetText(Text: string)
                 SubButton.Text = Text
-                SubButton.Base.Text = Text
+                SubButton.Base.Text = Translate(Text)
             end
 
             if typeof(SubButton.Tooltip) == "string" or typeof(SubButton.DisabledTooltip) == "string" then
@@ -3467,7 +3468,7 @@ do
 
         function Button:SetText(Text: string)
             Button.Text = Text
-            Button.Base.Text = Text
+            Button.Base.Text = Translate(Text)
         end
 
         if typeof(Button.Tooltip) == "string" or typeof(Button.DisabledTooltip) == "string" then
@@ -3533,7 +3534,7 @@ do
             BackgroundTransparency = 1,
             Position = UDim2.fromOffset(26, 0),
             Size = UDim2.new(1, -26, 1, 0),
-            Text = Toggle.Text,
+            Text = Translate(Toggle.Text),
             TextSize = 14,
             TextTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
@@ -3735,7 +3736,7 @@ do
         local Label = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(1, -40, 1, 0),
-            Text = Toggle.Text,
+            Text = Translate(Toggle.Text),
             TextSize = 14,
             TextTransparency = 0.4,
             TextXAlignment = Enum.TextXAlignment.Left,
@@ -3878,7 +3879,7 @@ do
 
         function Toggle:SetText(Text: string)
             Toggle.Text = Text
-            Label.Text = Text
+            Label.Text = Translate(Text)
         end
 
         Button.MouseButton1Click:Connect(function()
@@ -3956,7 +3957,7 @@ do
         local Label = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(1, 0, 0, 14),
-            Text = Input.Text,
+            Text = Translate(Input.Text),
             TextSize = 14,
             TextXAlignment = Enum.TextXAlignment.Left,
             Parent = Holder,
@@ -4044,7 +4045,7 @@ do
 
         function Input:SetText(Text: string)
             Input.Text = Text
-            Label.Text = Text
+            Label.Text = Translate(Text)
         end
 
         if Input.Finished then
@@ -4121,7 +4122,7 @@ do
             SliderLabel = New("TextLabel", {
                 BackgroundTransparency = 1,
                 Size = UDim2.new(1, 0, 0, 14),
-                Text = Slider.Text,
+                Text = Translate(Slider.Text),
                 TextSize = 14,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Parent = Holder,
@@ -4190,7 +4191,7 @@ do
             else
                 if Info.Compact then
                     DisplayLabel.Text =
-                        string.format("%s: %s%s%s", Slider.Text, Slider.Prefix, Slider.Value, Slider.Suffix)
+                        string.format("%s: %s%s%s", Translate(Slider.Text), Slider.Prefix, Slider.Value, Slider.Suffix)
                 elseif Info.HideMax then
                     DisplayLabel.Text = string.format("%s%s%s", Slider.Prefix, Slider.Value, Slider.Suffix)
                 else
@@ -4270,7 +4271,7 @@ do
         function Slider:SetText(Text: string)
             Slider.Text = Text
             if SliderLabel then
-                SliderLabel.Text = Text
+                SliderLabel.Text = Translate(Text)
                 return
             end
             Slider:Display()
@@ -4382,7 +4383,7 @@ do
         local Label = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(1, 0, 0, 14),
-            Text = Dropdown.Text,
+            Text = Translate(Dropdown.Text),
             TextSize = 14,
             TextXAlignment = Enum.TextXAlignment.Left,
             Visible = not not Info.Text,
@@ -4711,7 +4712,7 @@ do
             Dropdown.Text = Text
             Holder.Size = UDim2.new(1, 0, 0, Text and 39 or 21)
 
-            Label.Text = Text and Text or ""
+            Label.Text = Text and Translate(Text) or ""
             Label.Visible = not not Text
         end
 
@@ -6380,7 +6381,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Translate(Name),
+                Text = Translate(Nam),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
